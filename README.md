@@ -37,6 +37,7 @@ for [Creating a workflow file](https://help.github.com/en/articles/configuring-a
 
 - `coverage-overall` - The overall coverage of the project
 - `coverage-changed-files` - The total coverage of all changed files
+- `coverage-changed-lines` - The total coverage of all changed lines
 
 ### Example Workflow
 

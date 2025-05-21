@@ -138,6 +138,16 @@ describe('Single Empty report', function () {
       expect(out).toEqual(['coverage-changed-files', 100])
     })
 
+    it('set changed files coverage lines', async () => {
+      initContext(eventName, payload)
+      core.setOutput = output
+
+      await action.action()
+
+      const out = output.mock.calls[2]
+      expect(out).toEqual(['coverage-changed-lines', 100])
+    })
+
     describe('With update-comment ON', function () {
       const title = 'JaCoCo Report'
 
