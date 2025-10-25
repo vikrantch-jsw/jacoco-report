@@ -76,11 +76,11 @@ function getFileTable(
   emoji: Emoji
 ): string {
   const tableHeader = project.isMultiModule
-    ? '|Module|File|Coverage||'
-    : '|File|Coverage||'
+    ? '|Module|File|Total Coverage|New Code Coverage||'
+    : '|File|Total Coverage|New Code Coverage||'
   const tableStructure = project.isMultiModule
-    ? '|:-|:-|:-|:-:|'
-    : '|:-|:-|:-:|'
+    ? '|:-|:-|:-|:-|:-:|'
+    : '|:-|:-|:-|:-:|'
   let table = `${tableHeader}\n${tableStructure}`
   for (const module of project.modules) {
     for (let index = 0; index < module.files.length; index++) {
@@ -121,8 +121,8 @@ function getFileTable(
       coveragePercentage += ` **\`${formatCoverage(coverageDiff)}\`**`
     }
     const row = isMultiModule
-      ? `|${moduleName}|${fileName}|${coveragePercentage}|${status}|`
-      : `|${fileName}|${coveragePercentage}|${status}|`
+      ? `|${moduleName}|${fileName}|${coveragePercentage}|${formatCoverage(changedCoverage)}|${status}|`
+      : `|${fileName}|${coveragePercentage}|${formatCoverage(changedCoverage)}|${status}|`
     table = `${table}\n${row}`
   }
 }
