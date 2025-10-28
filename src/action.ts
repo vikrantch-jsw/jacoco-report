@@ -221,8 +221,12 @@ async function getChangedFiles(
   const changedFiles: ChangedFile[] = []
   const files = response.data.files ?? []
   for (const file of files) {
+    if (debugMode) core.info(`Checking file: ${file.filename}`)
     if (debugMode) core.info(`file: ${debug(file)}`)
     const changedLines = getChangedLines(file.patch)
+    if (debugMode) {
+      core.info(`🧾 ${file.filename} => changedLines: ${JSON.stringify(changedLines)}`)
+    }
     if (changedLines.length === 0) {
       if (debugMode) core.info(`Skipping ${file.filename} — no significant changed lines`)
       continue
