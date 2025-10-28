@@ -222,10 +222,15 @@ async function getChangedFiles(
   const files = response.data.files ?? []
   for (const file of files) {
     if (debugMode) core.info(`file: ${debug(file)}`)
+    const changedLines = getChangedLines(file.patch)
+    if (changedLines.length === 0) {
+      if (debugMode) core.info(`Skipping ${file.filename} — no significant changed lines`)
+      continue
+    }
     const changedFile: ChangedFile = {
       filePath: file.filename,
       url: file.blob_url,
-      lines: getChangedLines(file.patch),
+      lines: changedLines,
     }
     changedFiles.push(changedFile)
   }
