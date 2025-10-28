@@ -209,10 +209,16 @@ async function getChangedFiles(base, head, client, debugMode) {
     for (const file of files) {
         if (debugMode)
             core.info(`file: ${(0, util_1.debug)(file)}`);
+        const changedLines = (0, util_1.getChangedLines)(file.patch);
+        if (changedLines.length === 0) {
+            if (debugMode)
+                core.info(`Skipping ${file.filename} — no significant changed lines`);
+            continue;
+        }
         const changedFile = {
             filePath: file.filename,
             url: file.blob_url,
-            lines: (0, util_1.getChangedLines)(file.patch),
+            lines: changedLines,
         };
         changedFiles.push(changedFile);
     }
