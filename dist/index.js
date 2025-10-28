@@ -688,7 +688,13 @@ function getChangedLines(patch) {
                     for (const line of group) {
                         bX++;
                         if (line.startsWith('+')) {
-                            lineNumbers.add(bX - 1);
+                            const addedLine = line.substring(1).trim();
+                            // Skip log statements like log.info(), logger.debug(), System.out.println(), etc.
+                            const isLoggingLine = /(?:log|logger)\s*\.\s*(info|debug|warn|error|trace)\s*\(/i.test(addedLine) ||
+                                /System\.out\.println\s*\(/.test(addedLine);
+                            if (!isLoggingLine && addedLine !== '') {
+                                lineNumbers.add(bX - 1);
+                            }
                         }
                         else if (line.startsWith('-')) {
                             bX--;
