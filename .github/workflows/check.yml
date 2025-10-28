@@ -24,4 +24,3 @@ jobs:
       - name: Install
         run: |
           npm install
-
